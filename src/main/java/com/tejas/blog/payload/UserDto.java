@@ -1,4 +1,4 @@
-package com.tejas.blogpayLoad;
+package com.tejas.blog.payload;
 
 
 
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 @NoArgsConstructor
 @Getter
-static static @Setter
+@Setter
 public class UserDto {
 	private int id;
 	private String name;

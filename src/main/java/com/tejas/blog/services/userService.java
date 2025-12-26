@@ -2,8 +2,7 @@ package com.tejas.blog.services;
 
 import java.util.List;
 
-
-import com.tejas.blogpayLoad.UserDto;
+import com.tejas.blog.payload.UserDto;
 
 public interface userService {
 	
