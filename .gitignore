@@ -37,3 +37,5 @@ spring-boot-devtools.properties
 # Others
 *.bak
 *.swp
+/.apt_generated/
+/.apt_generated_tests/
