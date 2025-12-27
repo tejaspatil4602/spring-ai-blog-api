@@ -21,6 +21,8 @@ import com.tejas.blog.payload.UserDto;
 import com.tejas.blog.payload.ApisResponse;
 import com.tejas.blog.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/user")
 public class userController {
@@ -31,13 +33,13 @@ public class userController {
 	 // post Create User
 	 @PostMapping("/")
 	 
-	 public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+	 public ResponseEntity<UserDto> createUser(@Valid@RequestBody UserDto userDto){
 		 UserDto createUserDto = this.userService.createUser(userDto);
 		 return new ResponseEntity<>(createUserDto,HttpStatus.CREATED);
 	 }
 	 //Update User
 	 @PutMapping("/{userId}")
-	 public ResponseEntity<UserDto> updateUser (@RequestBody UserDto userDto ,@PathVariable Integer userId){
+	 public ResponseEntity<UserDto> updateUser (@Valid@RequestBody UserDto userDto ,@PathVariable Integer userId){
 		 UserDto updatedUser =this.userService.updateUser(userDto, userId );
 		 return ResponseEntity.ok(updatedUser);
 	 }
