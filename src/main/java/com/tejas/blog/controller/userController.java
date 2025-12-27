@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tejas.blog.payload.ApisResponse;
 import com.tejas.blog.payload.UserDto;
-import com.tejas.blog.payload.apisResponse;
+import com.tejas.blog.payload.ApisResponse;
 import com.tejas.blog.services.UserService;
 
 @RestController
