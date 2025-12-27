@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.tejas.blog.payload.UserDto;
 
-public interface userService {
+public interface UserService {
 	
 	 UserDto createUser(UserDto user);
 	 UserDto updateUser(UserDto update, Integer userId);

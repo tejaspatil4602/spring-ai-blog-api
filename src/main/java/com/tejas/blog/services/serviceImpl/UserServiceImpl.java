@@ -5,14 +5,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.tejas.blog.entities.User;
 import com.tejas.blog.repositories.UserRepo;
-import com.tejas.blog.services.userService;
+import com.tejas.blog.services.UserService;
 import com.tejas.blog.expections.ResourceNotFoundExpection;
 import com.tejas.blog.payload.UserDto;
 
-public class UserServiceImpl implements userService {
+@Service
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo userRepo;
