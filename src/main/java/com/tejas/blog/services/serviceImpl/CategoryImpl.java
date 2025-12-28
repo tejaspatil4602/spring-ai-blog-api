@@ -46,7 +46,7 @@ public class CategoryImpl implements CategoryService {
 	public void deleteCategory(Integer categoryId) {
 
 		Category cat = this.categoryRepo.findById(categoryId)
-				.orElseThrow(() -> new ResourceNotFoundExpection("Category", "category id", categoryId));
+				.orElseThrow(() -> new ResourceNotFoundExpection("Category ", "category id", categoryId));
 		this.categoryRepo.delete(cat);
 	}
 
