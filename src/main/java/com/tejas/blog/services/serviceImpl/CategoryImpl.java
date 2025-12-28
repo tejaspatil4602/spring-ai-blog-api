@@ -1,198 +1,73 @@
 package com.tejas.blog.services.serviceImpl;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
-
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import java.util.stream.Collectors;
+import com.tejas.blog.expections.ResourceNotFoundExpection;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.tejas.blog.entities.Category;
+import com.tejas.blog.payload.CategoryDto;
 import com.tejas.blog.repositories.CategoryRepo;
+import com.tejas.blog.services.CategoryService;
 
-public class CategoryImpl implements CategoryRepo {
+@Service
+public class CategoryImpl implements CategoryService {
+
+	@Autowired
+	private CategoryRepo categoryRepo;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
-	public void flush() {
-		// TODO Auto-generated method stub
-
+	public CategoryDto createCategory(CategoryDto categoryDto) {
+		Category cat = this.modelMapper.map(categoryDto, Category.class);
+		Category addedCat = this.categoryRepo.save(cat);
+		return this.modelMapper.map(addedCat, CategoryDto.class);
 	}
 
 	@Override
-	public <S extends Category> S saveAndFlush(S entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
+
+		Category cat = this.categoryRepo.findById(categoryId)
+				.orElseThrow();
+
+		cat.setCategoryTitle(categoryDto.getCategoryTitle());
+		cat.setCategoryDescription(categoryDto.getCategoryDescription());
+
+		Category updatedcat = this.categoryRepo.save(cat);
+
+		return this.modelMapper.map(updatedcat, CategoryDto.class);
 	}
 
 	@Override
-	public <S extends Category> List<S> saveAllAndFlush(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteCategory(Integer categoryId) {
+
+		Category cat = this.categoryRepo.findById(categoryId)
+				.orElseThrow(() -> new ResourceNotFoundExpection("Category", "category id", categoryId));
+		this.categoryRepo.delete(cat);
 	}
 
 	@Override
-	public void deleteAllInBatch(Iterable<Category> entities) {
-		// TODO Auto-generated method stub
+	public CategoryDto getCategory(Integer categoryId) {
+		Category cat = this.categoryRepo.findById(categoryId)
+				.orElseThrow(() -> new ResourceNotFoundExpection("Category", "category id", categoryId));
 
+		return this.modelMapper.map(cat, CategoryDto.class);
 	}
 
 	@Override
-	public void deleteAllByIdInBatch(Iterable<Integer> ids) {
-		// TODO Auto-generated method stub
+	public List<CategoryDto> getCategories() {
 
+		List<Category> categories = this.categoryRepo.findAll();
+		List<CategoryDto> catDtos = categories.stream().map((cat) -> this.modelMapper.map(cat, CategoryDto.class))
+				.collect(Collectors.toList());
+
+		return catDtos;
 	}
 
-	@Override
-	public void deleteAllInBatch() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Category getOne(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Category getById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Category getReferenceById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Category> List<S> findAll(Example<S> example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Category> List<S> findAll(Example<S> example, Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Category> List<S> saveAll(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Category> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Category> findAllById(Iterable<Integer> ids) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Category> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<Category> findById(Integer id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
-
-	@Override
-	public boolean existsById(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Category entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAllById(Iterable<? extends Integer> ids) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAll(Iterable<? extends Category> entities) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAll() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Category> findAll(Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Page<Category> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Category> Optional<S> findOne(Example<S> example) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
-
-	@Override
-	public <S extends Category> Page<S> findAll(Example<S> example, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Category> long count(Example<S> example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public <S extends Category> boolean exists(Example<S> example) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <S extends Category, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
