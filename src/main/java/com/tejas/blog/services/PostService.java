@@ -3,6 +3,7 @@ package com.tejas.blog.services;
 import java.util.List;
 
 import com.tejas.blog.payload.PostDto;
+import com.tejas.blog.payload.PostResponse;
 
 public interface PostService {
 
@@ -20,7 +21,7 @@ public interface PostService {
 	
 	//get all posts
 	
-	//PostResponse getAllPost(Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
+	PostResponse getAllPost(Integer pageNumber,Integer pageSize,String sortBy,String sortDir);
 	
 	//get single post
 	
